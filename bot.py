@@ -39,7 +39,7 @@ class XBot:
     def connection_process(self):
         connection = self.driver.find_element(By.LINK_TEXT, 'Se connecter')
         connection.click()
-        time.sleep(2)
+        time.sleep(4)
         email_input = self.driver.find_element(By.XPATH, '//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]'
                                                          '/div[2]/div/div/div[2]/div[2]/div/div/div/div[4]/label/div/'
                                                          'div[2]/div/input')
@@ -61,6 +61,7 @@ class XBot:
             insert_profile_name = self.driver.find_element(By.XPATH, '//*[@id="layers"]/div[2]/div/div/div/div'
                                                                      '/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]'
                                                                      '/div/div[2]/label/div/div[2]/div/input')
+            print(f"username: {username}")
             insert_profile_name.send_keys(username)
             insert_profile_name.send_keys(Keys.ENTER)
 

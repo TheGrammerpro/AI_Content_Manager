@@ -41,7 +41,7 @@ class Themes:
 
     def holiday_check(self):
         for holiday in self.holiday_list:
-            if (holiday['day'] == self.current_day and holiday['month'] == self.current_month
+            if (holiday['day'] == self.current_day and holiday['month'] == self.current_month[0]
                     and holiday['date'] == "Gregorian"):
                 print(f"We should celebrate {holiday['holiday']}")
                 self.holiday_today = (True, holiday['holiday'])
