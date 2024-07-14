@@ -25,9 +25,12 @@ OPTIONS = [(1, "Every 3 hours"), (2, "Every 6 hours"), (3, "Every 12 hours"), (4
 
 # AI content manager form:
 class AIContentForm(FlaskForm):
+    business_name = StringField('Your Business name',
+                                [validators.Length(min=8, max=256), validators.InputRequired()],
+                                render_kw={"placeholder": "e.g. Jimmy's Cupcakes"})
     business_theme = StringField('Your Business Theme',
                                  [validators.Length(min=8, max=256), validators.InputRequired()],
-                                 render_kw={"placeholder": "e.g. business type"})
+                                 render_kw={"placeholder": "e.g. We create the tastiest cupcakes"})
     post_frequency = SelectField('How often would you like to post?', [validators.InputRequired()],
                                  choices=OPTIONS)
     post_hour = SelectField('When would you like to post?', [validators.InputRequired()],
@@ -37,15 +40,15 @@ class AIContentForm(FlaskForm):
 
 @app.route('/')
 def home():
-    return render_template('Index.html', title='rando rando')
+    return render_template('Index.html', title='home page')
 
 
-@app.route('/ai_content_manager')
+@app.route('/ai_content_manager', methods=["POST", "GET"])
 def ai_content_manager():
     form = AIContentForm()
     if form.validate_on_submit():
-        business_theme = form.business_theme.data
-        XBot(business_theme)
+        business = {"name": form.business_theme.data, "theme": form.business_name.data}
+        XBot(business)
         flash("Automation save successfully!")
         return render_template('generic.html', form=form)
     return render_template('generic.html', form=form)
